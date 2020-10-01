@@ -1,6 +1,6 @@
 from flask import Flask, flash, request, redirect, url_for, render_template
 from werkzeug.utils import secure_filename
-from mobileNet import get_prediction
+from inception_model import get_prediction
 import os
 
 app = Flask(__name__)
