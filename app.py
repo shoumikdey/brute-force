@@ -11,19 +11,18 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html')  # returns the landing page for image upload
 
 
 @app.route('/', methods=['GET', 'POST'])
 def img_upload():
     if request.method == 'POST':
         file = request.files['file']
-        # print(file.filename)
+        # get the filename
         filename = secure_filename(file.filename)
-        # print(filename)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        prediction = get_prediction(filename)
-        os.remove(filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))  # save the image
+        prediction = get_prediction(filename)  # predict the presence of the probable object
+        os.remove(filename)  # delete the image from local storage
     return prediction[0][1]
 
 
