@@ -1,2 +1,2 @@
 # brute-force
-Animal Classifier
+Classifies everything using Mobile-Net
