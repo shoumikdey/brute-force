@@ -95,7 +95,7 @@
             </div>
             <div class="upload-btn file is-dark">
               <label class="file-label">
-                <input class="file-input" type="file" name="file" id="file">
+                <input class="file-input" accept="image/*" type="file" name="file" id="file">
                 <span class="file-cta">
                   <span class="file-label" id="upload-file-chooser-text">
                     choose an image
@@ -126,6 +126,7 @@
     <script>
       const imagefile = document.getElementById('file');
       const predHolder = document.getElementById('prediction-placeholder');
+      const uploadButton = document.querySelector('.upload-btn');
       const fileChooser = document.getElementById('upload-file-chooser-text');
 
       const loadFile = (event) => {
@@ -138,10 +139,13 @@
         loadFile(event);
         predHolder.innerText = 'upload an image to predict what it is';
         fileChooser.innerText = 'working';
+        imagefile.disabled = true;
+        uploadButton.classList.toggle('is-dark');
+        uploadButton.classList.toggle('is-danger');
         const formData = new FormData();
         formData.append('file', imagefile.files[0]);
         axios
-          .post('/', formData, {
+          .post('https://cors-anywhere.herokuapp.com/https://obscure-meadow-89402.herokuapp.com/', formData, {
             headers: {
               'Content-Type': 'multipart/form-data'
             }
@@ -149,10 +153,16 @@
           .then(res => {
             predHolder.innerHTML = 'prediction: ' + res.data + '<br />upload an image to predict what it is';
             fileChooser.innerText = 'choose an image';
+            imagefile.disabled = false;
+            uploadButton.classList.toggle('is-dark');
+            uploadButton.classList.toggle('is-danger');
           })
           .catch(err => {
             predHolder.innerHTML = 'an error occured :(<br />upload an image to predict what it is';
             fileChooser.innerText = 'choose an image';
+            imagefile.disabled = false;
+            uploadButton.classList.toggle('is-dark');
+            uploadButton.classList.toggle('is-danger');
           });
       };
 
