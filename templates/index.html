@@ -145,7 +145,7 @@
         const formData = new FormData();
         formData.append('file', imagefile.files[0]);
         axios
-          .post('https://cors-anywhere.herokuapp.com/https://obscure-meadow-89402.herokuapp.com/', formData, {
+          .post('/', formData, {
             headers: {
               'Content-Type': 'multipart/form-data'
             }
