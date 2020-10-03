@@ -91,7 +91,7 @@
         <div class="upload-div">
           <div class=" upload-text has-text-centered">
             <div class="upload-helper-text" id="prediction-placeholder">
-              drag-and-drop or upload an image
+              upload an image to predict what it is
             </div>
             <div class="upload-btn file is-dark">
               <label class="file-label">
@@ -136,6 +136,7 @@
 
       imagefile.onchange = (event) => {
         loadFile(event);
+        predHolder.innerText = 'upload an image to predict what it is';
         fileChooser.innerText = 'working';
         const formData = new FormData();
         formData.append('file', imagefile.files[0]);
@@ -146,11 +147,11 @@
             }
           })
           .then(res => {
-            predHolder.innerHTML = 'prediction: ' + res.data;
+            predHolder.innerHTML = 'prediction: ' + res.data + '<br />upload an image to predict what it is';
             fileChooser.innerText = 'choose an image';
           })
           .catch(err => {
-            predHolder.innerHTML = 'an error occured :(';
+            predHolder.innerHTML = 'an error occured :(<br />upload an image to predict what it is';
             fileChooser.innerText = 'choose an image';
           });
       };
