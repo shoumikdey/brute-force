@@ -1,8 +1,162 @@
- <!doctype html>
+<!-- <!doctype html>
     <title>Upload new File</title>
     <h1>Upload new File</h1>
     <form method=post enctype=multipart/form-data>
       <input type=file name=file>
       <input type=submit value=Upload>
     </form>
- </html>
+ </html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BruteForce | classify everything</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@latest/css/bulma.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+    <style>
+      * {
+        font-family: 'Fira Code', monospace !important;
+      }
+
+      .upload-div {
+        width: 50%;
+        position: relative;
+        margin: 2em auto;
+        background-color: #eee;
+        border-radius: 2em;
+        display: grid;
+        grid-row-gap: 1em;
+        padding: 2em;
+      }
+
+      .upload-text {
+        grid-column-start: 1;
+        grid-column-end: 1;
+        grid-row-start: 1;
+        grid-row-end: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+      }
+
+      .upload-canvas {
+        grid-column-start: 1;
+        grid-column-end: 1;
+        grid-row-start: 2;
+        grid-row-end: 3;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .upload-btn {
+        margin-top: 1em;
+      }
+
+      .footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        padding: 1em !important;
+        margin: 0 auto;
+        width: 100%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header class="hero is-dark">
+      <div class="hero-body">
+        <div class="container has-text-centered">
+          <h1 class="title">
+            BruteForce
+          </h1>
+          <h2 class="subtitle">
+            classify everything
+          </h2>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="container">
+        <div class="prediction-area is-hidden">
+          hi
+        </div>
+        <div class="upload-div">
+          <div class=" upload-text has-text-centered">
+            <div class="upload-helper-text" id="prediction-placeholder">
+              upload an image to predict what it is
+            </div>
+            <div class="upload-btn file is-dark">
+              <label class="file-label">
+                <input class="file-input" type="file" name="file" id="file">
+                <span class="file-cta">
+                  <span class="file-label" id="upload-file-chooser-text">
+                    choose an image
+                  </span>
+                </span>
+              </label>
+            </div>
+          </div>
+          <div class="upload-canvas">
+            <img src="" alt="" id="output">
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer is-dark">
+      <div class="content has-text-centered">
+        GitHub:
+        <a href="https://github.com/shoumikdey/brute-force" target="_blank">
+          shoumikdey/brute-force
+        </a>
+      </div>
+    </footer>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.15.0/js/all.js"></script>
+
+    <script>
+      const imagefile = document.getElementById('file');
+      const predHolder = document.getElementById('prediction-placeholder');
+      const fileChooser = document.getElementById('upload-file-chooser-text');
+
+      const loadFile = (event) => {
+        let output = document.getElementById('output');
+        output.src = URL.createObjectURL(event.target.files[0]);
+        output.onload = () => URL.revokeObjectURL(output.src);
+      }
+
+      imagefile.onchange = (event) => {
+        loadFile(event);
+        predHolder.innerText = 'upload an image to predict what it is';
+        fileChooser.innerText = 'working';
+        const formData = new FormData();
+        formData.append('file', imagefile.files[0]);
+        axios
+          .post('/', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          })
+          .then(res => {
+            predHolder.innerHTML = 'prediction: ' + res.data + '<br />upload an image to predict what it is';
+            fileChooser.innerText = 'choose an image';
+          })
+          .catch(err => {
+            predHolder.innerHTML = 'an error occured :(<br />upload an image to predict what it is';
+            fileChooser.innerText = 'choose an image';
+          });
+      };
+
+    </script>
+  </body>
+
+</html>
