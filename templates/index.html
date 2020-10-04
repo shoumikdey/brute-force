@@ -129,6 +129,23 @@
       const uploadButton = document.querySelector('.upload-btn');
       const fileChooser = document.getElementById('upload-file-chooser-text');
 
+      function getExtension(filename) {
+        var parts = filename.split('.');
+        return parts[parts.length - 1];
+      }
+
+      function isImage(filename) {
+        var ext = getExtension(filename);
+        switch (ext.toLowerCase()) {
+          case 'jpg':
+          case 'jpeg':
+          case 'bmp':
+          case 'png':
+            return true;
+        }
+        return false;
+      }
+
       const loadFile = (event) => {
         let output = document.getElementById('output');
         output.src = URL.createObjectURL(event.target.files[0]);
@@ -143,6 +160,14 @@
         uploadButton.classList.toggle('is-dark');
         uploadButton.classList.toggle('is-danger');
         const formData = new FormData();
+
+        const filename = imagefile.files[0].name;
+        if(!isImage(getExtension(filename))){
+          alert('Only image files are allowed!');
+          imagefile.files = null;
+          return;
+        }
+
         formData.append('file', imagefile.files[0]);
         axios
           .post('/', formData, {
