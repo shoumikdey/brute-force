@@ -95,7 +95,7 @@
             </div>
             <div class="upload-btn file is-dark">
               <label class="file-label">
-                <input class="file-input" type="file" name="file" id="file">
+                <input class="file-input" accept="image/*" type="file" name="file" id="file">
                 <span class="file-cta">
                   <span class="file-label" id="upload-file-chooser-text">
                     choose an image
@@ -126,7 +126,25 @@
     <script>
       const imagefile = document.getElementById('file');
       const predHolder = document.getElementById('prediction-placeholder');
+      const uploadButton = document.querySelector('.upload-btn');
       const fileChooser = document.getElementById('upload-file-chooser-text');
+
+      function getExtension(filename) {
+        var parts = filename.split('.');
+        return parts[parts.length - 1];
+      }
+
+      function isImage(filename) {
+        var ext = getExtension(filename);
+        switch (ext.toLowerCase()) {
+          case 'jpg':
+          case 'jpeg':
+          case 'bmp':
+          case 'png':
+            return true;
+        }
+        return false;
+      }
 
       const loadFile = (event) => {
         let output = document.getElementById('output');
@@ -138,7 +156,18 @@
         loadFile(event);
         predHolder.innerText = 'upload an image to predict what it is';
         fileChooser.innerText = 'working';
+        imagefile.disabled = true;
+        uploadButton.classList.toggle('is-dark');
+        uploadButton.classList.toggle('is-danger');
         const formData = new FormData();
+
+        const filename = imagefile.files[0].name;
+        if(!isImage(getExtension(filename))){
+          alert('Only image files are allowed!');
+          imagefile.files = null;
+          return;
+        }
+
         formData.append('file', imagefile.files[0]);
         axios
           .post('/', formData, {
@@ -149,10 +178,16 @@
           .then(res => {
             predHolder.innerHTML = 'prediction: ' + res.data + '<br />upload an image to predict what it is';
             fileChooser.innerText = 'choose an image';
+            imagefile.disabled = false;
+            uploadButton.classList.toggle('is-dark');
+            uploadButton.classList.toggle('is-danger');
           })
           .catch(err => {
             predHolder.innerHTML = 'an error occured :(<br />upload an image to predict what it is';
             fileChooser.innerText = 'choose an image';
+            imagefile.disabled = false;
+            uploadButton.classList.toggle('is-dark');
+            uploadButton.classList.toggle('is-danger');
           });
       };
 
