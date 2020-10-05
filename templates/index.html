@@ -156,7 +156,7 @@
         const filename = imagefile.files[0].name;
         if (!isImage(getExtension(filename))) {
           alert('Only image files are allowed!');
-          imagefile.files = null;
+          imagefile.value = "";
           return;
         }
 
