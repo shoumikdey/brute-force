@@ -14,3 +14,4 @@ Please follow standard fork-and-pull workflow.
 - Clone the project locally
 - Commit changes to your own branch
 - Push the change back to the branch as in the issue
+- Attaching a working GIF in the PR description will enable faster merging.
