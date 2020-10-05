@@ -31,6 +31,13 @@
         grid-row-gap: 1em;
         padding: 2em;
       }
+      .headshot {
+        box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.5);
+      }
+
+      .headshot-2 {
+        background-image: var(--img-url), linear-gradient(to bottom right, #ff3cac, #562b7c, #2b86c5);
+      }
 
       .upload-text {
         grid-column-start: 1;
@@ -74,7 +81,7 @@
       <div class="hero-body">
         <div class="container has-text-centered">
           <h1 class="title">
-            BruteForce
+           <ul> BruteForce</ul>
           </h1>
           <h2 class="subtitle">
             classify everything
@@ -88,17 +95,17 @@
         <div class="prediction-area is-hidden">
           hi
         </div>
-        <div class="upload-div">
+        <div class="upload-div headshot headshot-2">
           <div class=" upload-text has-text-centered">
             <div class="upload-helper-text" id="prediction-placeholder">
-              upload an image to predict what it is
+             <b> Upload an image to predict what it is </b>
             </div>
             <div class="upload-btn file is-dark">
               <label class="file-label">
                 <input class="file-input" accept="image/*" type="file" name="file" id="file">
                 <span class="file-cta">
                   <span class="file-label" id="upload-file-chooser-text">
-                    choose an image
+                    Choose an image
                   </span>
                 </span>
               </label>
@@ -113,7 +120,7 @@
 
     <footer class="footer is-dark">
       <div class="content has-text-centered">
-        GitHub:
+        <b>GitHub:</b>
         <a href="https://github.com/shoumikdey/brute-force" target="_blank">
           shoumikdey/brute-force
         </a>
@@ -141,6 +148,7 @@
           case 'jpeg':
           case 'bmp':
           case 'png':
+          case 'gif':
             return true;
         }
         return false;
