@@ -31,6 +31,13 @@
         grid-row-gap: 1em;
         padding: 2em;
       }
+      .headshot {
+        box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.5);
+      }
+
+      .headshot-2 {
+        background-image: var(--img-url), linear-gradient(to bottom right, #ff3cac, #562b7c, #2b86c5);
+      }
 
       .upload-text {
         grid-column-start: 1;
@@ -88,7 +95,7 @@
         <div class="prediction-area is-hidden">
           hi
         </div>
-        <div class="upload-div">
+        <div class="upload-div headshot headshot-2">
           <div class=" upload-text has-text-centered">
             <div class="upload-helper-text" id="prediction-placeholder">
               Upload an image to predict what it is
